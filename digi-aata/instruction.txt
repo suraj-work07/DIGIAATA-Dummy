@@ -1,0 +1,532 @@
+DIGI-AATA STATIC E-COMMERCE MVP INSTRUCTIONS (Ready-to-feed to an LLM)
+===============================================================================
+Goal:
+A static, production-ready React + TypeScript (Vite) project that LOOKS / FEELS like
+an e-commerce site but uses hardcoded product data (from the attached PDF). No
+payment integration or dynamic product management. Full cart flow, checkout form,
+local persistence, responsive layout, and brochure-inspired visual style.
+
+Use this file as a single prompt/input to an LLM-based code generator (or paste
+into your own implementation). It contains all functional requirements, data,
+design tokens, sample product data, folder layout, dev commands, acceptance tests,
+and implementation notes.
+
+-------------------------
+1) PROJECT SUMMARY (MVP)
+-------------------------
+- Name: digi-aata-demo
+- Type: static SPA (Single Page App) built with Vite + React + TypeScript
+- Styling: Tailwind CSS (preferred). Optionally CSS Modules if you do not want Tailwind.
+- Router: react-router-dom
+- State: React Context for cart; cart persisted to localStorage
+- Purpose: Showcase products (hard-coded JSON) with full add-to-cart and checkout
+  experience (no payment). Must be easily replaceable by a real backend later.
+
+-------------------------
+2) HIGH-LEVEL FEATURES (MVP TERMS)
+-------------------------
+- Home / Landing page:
+  * Hero section using brochure cover image and brand text
+  * Featured products grid (from products.ts)
+  * Contact snippet (phone / Instagram / address)
+- Products listing:
+  * Grid of all products sorted by category or default order
+  * Each ProductCard shows image, name, shortDescription, price, Add to Cart
+- Product detail page:
+  * Large image carousel (or single image)
+  * Full description, age, price, quantity selector, Add to Cart
+- Cart:
+  * List of selected items (image, name, unit price, qty, subtotal)
+  * Quantity increment/decrement and remove functionality
+  * Cart total, taxes (optional static calc), shipping placeholder
+  * Persist to localStorage and sync to header cart count
+- Checkout (static):
+  * Form with Name, Phone, Email, Address, City, State, Pincode, Note
+  * "Place order" saves order to localStorage['orders'] and shows success screen
+  * No payment integration
+- About / Contact:
+  * Business details from PDF
+- Accessibility:
+  * Keyboard accessible buttons, images with alt, labels on form controls
+- Responsive:
+  * 3-column product grid desktop, 2-column tablet, 1-column mobile
+- Tests:
+  * Unit tests for CartContext add/remove/persist using React Testing Library
+
+-------------------------
+3) TECH STACK & TOOLING
+-------------------------
+- Node >= 18
+- Vite (React + TypeScript template)
+- React 18+
+- TypeScript
+- Tailwind CSS v3 (postcss + autoprefixer)
+- react-router-dom
+- jest + @testing-library/react (or vitest)
+- ESLint + Prettier (optional)
+
+Dev commands to include in README:
+  npm create vite@latest digi-aata-demo -- --template react-ts
+  cd digi-aata-demo
+  npm install
+  npm install react-router-dom
+  npm install -D tailwindcss postcss autoprefixer
+  npx tailwindcss init -p
+  npm run dev
+  npm run build
+  npm run preview
+  npm test
+
+-------------------------
+4) DESIGN TOKENS (from PDF)
+-------------------------
+Colors (CSS variables / Tailwind extend):
+  --bg-base: #F3E7DF
+  --surface: #FFFDFB
+  --text-primary: #5B3E31
+  --muted: #A78B7A
+  --price-badge: #D9423F
+
+Accent rainbow:
+  --accent-red:   #E44E3C
+  --accent-orange:#F29C35
+  --accent-yellow:#F1C40F
+  --accent-green: #2FB76B
+  --accent-blue:  #3A99D9
+  --accent-purple:#9B59B6
+
+Typography:
+  Headings: Poppins or Inter (600+ weight)
+  Body: Roboto / Noto Sans / system-ui
+
+Spacing and radii:
+  - Card radius: 12px (rounded-xl)
+  - Buttons: 10–12px vertical padding
+  - Shadows: soft warm shadow (e.g., 0 6px 20px rgba(90, 60, 50, 0.08))
+
+UI patterns:
+  - Price badge: rounded pill with price in white on --price-badge (or gradient)
+  - Product card: image (circle or rounded), title, short desc, price, Add button
+  - Header: logo left, search optional, cart icon right with count badge
+  - Use warm beige background, card surfaces white with subtle shadow
+
+-------------------------
+5) ASSETS & IMAGES
+-------------------------
+- Place images in /public/products/
+- Suggested filenames (from PDF extraction):
+  balancing-cat.jpg
+  indian-nesting-dolls.jpg
+  ladybug-yoyo.jpg
+  giraffe-pull-toy.jpg
+  container-train.jpg
+  peacock-rattle.jpg
+  dinosaur-pull-toy.jpg
+  stacking-rings.jpg
+  wooden-dog-push-toy.jpg
+  crocodile-push-toy.jpg
+  wooden-duck-push-toy.jpg
+  speedter-gt-bee-car.jpg
+  rainbow-arches.jpg
+  natural-push-toy.jpg
+  tirupati-idol-set.jpg
+  rajasthani-hand-mirror.jpg
+  heritage-bronze-wall-hanging.jpg
+  artisan-nesting-trays.jpg
+  celestial-harmony-ganesha.jpg
+  wooden-krishna-idol.jpg
+  bamboo-pendant-light.jpg
+  traditional-echoes-idol.jpg
+  organic-hanging-planter.jpg
+
+Image notes:
+- Use 1:1 or 4:3 thumbnails for listing; high-res for product details
+- Add alt text from `shortDescription`
+
+-------------------------
+6) DATA FILE (HARD-CODED)
+-------------------------
+Create /src/data/products.ts with a Products[] array. Example skeleton:
+export type Product = {
+  id: string;
+  name: string;
+  price: number; // INR
+  shortDescription: string;
+  description: string;
+  age: string;
+  image: string;
+  category?: string;
+};
+
+(Include the full product list below verbatim; this block is ready to paste into products.ts)
+
+PRODUCTS (copy-paste block)
+-------------------------
+[
+  {
+    id: "balancing-cat",
+    name: "Balancing Cat",
+    price: 850,
+    shortDescription: "Stack colorful, uniquely-shaped wooden blocks on a smiling cat base.",
+    description: "Challenge yourself with Balancing Cat! Strategically stack various colorful, uniquely shaped wooden blocks on a smiling cat base. Develop fine motor skills, spatial reasoning, and problem-solving, all while having endless creative fun.",
+    age: "3+",
+    image: "/products/balancing-cat.jpg"
+  },
+  {
+    id: "indian-nesting-dolls",
+    name: "Indian Nesting Dolls (set of 5)",
+    price: 400,
+    shortDescription: "Handcrafted, colorful wooden nesting dolls (set of 5).",
+    description: "This set of five handcrafted, colorful, uniquely painted wooden nesting dolls provides endless creative fun. Develop fine motor skills, spatial reasoning, and problem-solving. A beautiful piece for play and home décor.",
+    age: "3+",
+    image: "/products/indian-nesting-dolls.jpg"
+  },
+  {
+    id: "ladybug-yoyo",
+    name: "Ladybug Yo-Yo",
+    price: 120,
+    shortDescription: "Handcrafted wooden yo-yo with a ladybug design.",
+    description: "Discover classic fun with a charming twist! This handcrafted wooden yo-yo features an adorable ladybug design. Develop hand-eye coordination, fine motor skills, and patience. Smooth, durable design suitable for beginners and experienced players.",
+    age: "6+",
+    image: "/products/ladybug-yoyo.jpg"
+  },
+  {
+    id: "giraffe-pull-toy",
+    name: "Giraffe Pull Toy",
+    price: 300,
+    shortDescription: "Wooden giraffe pull toy for toddlers with vibrant paint.",
+    description: "Introduce your child to their first safari with our adorable Wooden Giraffe Pull Toy! Handcrafted with vibrant colors and a friendly face, it encourages walking, enhances coordination, and sparks imaginative play.",
+    age: "18 months+",
+    image: "/products/giraffe-pull-toy.jpg"
+  },
+  {
+    id: "container-train",
+    name: "Handcrafted Container Train",
+    price: 850,
+    shortDescription: "Wooden train with three removable containers and folk-art paint.",
+    description: "Experience a joyful journey with this handcrafted wooden train! Expertly painted with intricate Indian folk art, it features three removable containers with lids—perfect for storing treasures or enhancing imaginative play.",
+    age: "3+",
+    image: "/products/container-train.jpg"
+  },
+  {
+    id: "peacock-rattle",
+    name: "Peacock Rattle",
+    price: 120,
+    shortDescription: "Handpainted peacock rattle sized for little hands.",
+    description: "Handcrafted Peacock Rattle, expertly painted with vibrant Indian motifs. Produces a soft, soothing sound and is perfectly sized for little hands—stimulates senses and celebrates heritage.",
+    age: "3+ months",
+    image: "/products/peacock-rattle.jpg"
+  },
+  {
+    id: "dinosaur-pull-toy",
+    name: "Wooden Dinosaur Pull Toy",
+    price: 300,
+    shortDescription: "Vibrant green wooden dinosaur pull toy for toddlers.",
+    description: "Embark on prehistoric adventures with this handcrafted wooden Dinosaur Pull Toy. Durable and delightfully detailed; pulling promotes gross motor skills and imaginative play.",
+    age: "18 months+",
+    image: "/products/dinosaur-pull-toy.jpg"
+  },
+  {
+    id: "stacking-rings",
+    name: "Stacking Rings",
+    price: 250,
+    shortDescription: "Classic stacking toy with brightly colored rings and smiling top.",
+    description: "Sort, stack, and learn! This classic handcrafted wooden toy features multiple brightly colored rings and a cheerful smiling top piece—perfect for fine motor skill development and size sequencing.",
+    age: "12 months+",
+    image: "/products/stacking-rings.jpg"
+  },
+  {
+    id: "wooden-dog-push-toy",
+    name: "Wooden Dog Push Toy",
+    price: 300,
+    shortDescription: "Friendly wooden dog push toy to encourage crawling/walking.",
+    description: "Meet your child's playful companion! This charming wooden dog push toy is beautifully crafted with smooth edges and a friendly design—ideal for little hands learning to grasp and push.",
+    age: "12 months+",
+    image: "/products/wooden-dog-push-toy.jpg"
+  },
+  {
+    id: "crocodile-push-toy",
+    name: "Crocodile Push Toy",
+    price: 350,
+    shortDescription: "Handcrafted wooden crocodile with smooth-rolling wheels.",
+    description: "Embark on wild adventures with this charming Wood Crocodile! Handcrafted from child-safe, eco-friendly wood, its smooth-rolling wheels encourage pushing and imaginative storytelling.",
+    age: "12 months+",
+    image: "/products/crocodile-push-toy.jpg"
+  },
+  {
+    id: "duck-push-toy",
+    name: "Wooden Duck Push Toy",
+    price: 300,
+    shortDescription: "Smooth-rolling wooden duck crafted for little hands.",
+    description: "Embark on happy adventures with this charming wooden duck! Crafted from child-safe, eco-friendly wood with smooth-rolling wheels—perfect to develop motor skills and imaginative fun.",
+    age: "12 months+",
+    image: "/products/wooden-duck-push-toy.jpg"
+  },
+  {
+    id: "speedter-gt",
+    name: "Speedter GT Push Along (Bee Car)",
+    price: 350,
+    shortDescription: "Classic wooden car with vibrant finish and bee design.",
+    description: "Ignite imagination with this classic wooden car! Crafted from child-safe wood and featuring smooth-rolling wheels and a fun bee design. Inspires racing adventures and fine motor skill development.",
+    age: "12 months+",
+    image: "/products/speedter-gt-bee-car.jpg"
+  },
+  {
+    id: "classic-rainbow-arches",
+    name: "Stacking Rainbow / Rainbow Arches",
+    price: 400,
+    shortDescription: "Wooden rainbow arches for stacking and creative play.",
+    description: "Unlock creativity with this classic stacking rainbow toy! A spectrum of vibrant wooden arches inspires imaginative play, spatial reasoning and color recognition—craftsmanship from child-safe wood.",
+    age: "12 months+",
+    image: "/products/rainbow-arches.jpg"
+  },
+  {
+    id: "natural-push-toy",
+    name: "Natural Wooden Push Toy (first toy)",
+    price: 300,
+    shortDescription: "Minimal natural wooden push toy for infants.",
+    description: "A charming, handcrafted natural wooden push toy with smooth curves and simple design. Perfectly sized for little hands to grasp and explore—encourages early motor skills and crawling.",
+    age: "6+ months",
+    image: "/products/natural-push-toy.jpg"
+  },
+  {
+    id: "tirupati-idol-set",
+    name: "Handcrafted Tirupati Balaji Idol Set",
+    price: 800,
+    shortDescription: "Hand-painted wooden idol set of Lord Tirupati Balaji and companions.",
+    description: "Experience divine craftsmanship with a handcrafted wooden idol set featuring Lord Tirupati Balaji and divine companions. Meticulously hand-painted with folk art details for home puja or decor.",
+    age: "Decorative / All ages",
+    image: "/products/tirupati-idol-set.jpg"
+  },
+  {
+    id: "rajasthani-hand-mirror",
+    name: "Rajasthani Hand Mirror (Folk Art)",
+    price: 250,
+    shortDescription: "Hand-painted wooden hand mirror with elephant motifs and vibrant colors.",
+    description: "Experience the opulent elegance of Rajasthan with this handcrafted wooden hand mirror featuring intricate hand-painted folk art—beautiful as daily use or decorative accent.",
+    age: "Decorative",
+    image: "/products/rajasthani-hand-mirror.jpg"
+  },
+  {
+    id: "heritage-bronze-wall-hanging",
+    name: "Heritage Bronze Wall Hanging",
+    price: 450,
+    shortDescription: "Metal/bronze style artisan wall hangings with cultural motifs.",
+    description: "Adorn your space with 'Heritage Bronze' wall hangings—intricate designs of elephants and divine figures handcrafted by master artisans. A soulful addition to any room.",
+    age: "Decorative",
+    image: "/products/heritage-bronze-wall-hanging.jpg"
+  },
+  {
+    id: "artisan-nesting-trays",
+    name: "Artisan Nesting Trays (hand-carved)",
+    price: 1200,
+    shortDescription: "Hand-carved wooden nesting trays with leaf patterns and scalloped edges.",
+    description: "Elevate home décor with hand-carved wooden nesting trays—delicate leaf patterns and scalloped edges that blend rustic elegance with practical versatility.",
+    age: "Decorative",
+    image: "/products/artisan-nesting-trays.jpg"
+  },
+  {
+    id: "celestial-harmony-ganesha",
+    name: "Celestial Harmony — Ganesha on Peacock (Brass/Idol)",
+    price: 750,
+    shortDescription: "Handcrafted brass idol: Lord Ganesha seated on a peacock.",
+    description: "Discover 'Celestial Harmony'—a handcrafted brass idol of Lord Ganesha seated on a majestic peacock. A testament to artisan craft, divine symbolism and timeless artistry.",
+    age: "Decorative / All ages",
+    image: "/products/celestial-harmony-ganesha.jpg"
+  },
+  {
+    id: "wooden-krishna-idol",
+    name: "Handcrafted Wooden Krishna Idol",
+    price: 350,
+    shortDescription: "Handcrafted wooden idol representing Lord Krishna.",
+    description: "A beautiful handcrafted wooden idol of Lord Krishna—an expression of Divine Serenity and cultural heritage, suitable for home altars or as a thoughtful gift.",
+    age: "Decorative",
+    image: "/products/wooden-krishna-idol.jpg"
+  },
+  {
+    id: "bamboo-pendant-light",
+    name: "Organic Glow — Bamboo Pendant Light",
+    price: 460,
+    shortDescription: "Handcrafted bamboo pendant light for warm ambient lighting.",
+    description: "Illuminate your home with the 'Organic Glow' bamboo pendant light—uniquely designed from natural bamboo to cast soft, ambient light and add rustic charm.",
+    age: "Home decor / Electrical",
+    image: "/products/bamboo-pendant-light.jpg"
+  },
+  {
+    id: "traditional-echoes-idol",
+    name: "Traditional Echoes — Musical Wooden Idol",
+    price: 300,
+    shortDescription: "Handcrafted wooden idol celebrating musical heritage.",
+    description: "Experience the rhythm and artistry with this handcrafted wooden idol—a homage to India's musical heritage that brings melody and soulful decor into your home.",
+    age: "Decorative",
+    image: "/products/traditional-echoes-idol.jpg"
+  },
+  {
+    id: "organic-hanging-planter",
+    name: "Organic Hanging Planter (macrame + coconut shell)",
+    price: 180,
+    shortDescription: "Handwoven macrame hanger with coconut shell planter.",
+    description: "Elevate living spaces with an Organic Hanging Planter: handwoven macrame hanger cradling a sustainably sourced coconut shell pot—perfect for succulents or herbs.",
+    age: "Home decor",
+    image: "/products/organic-hanging-planter.jpg"
+  }
+]
+
+-------------------------
+7) COMPONENT & FOLDER LAYOUT
+-------------------------
+/src
+  /components
+    Header.tsx         // logo + search + cart icon + nav links
+    Footer.tsx         // contact + social
+    ProductCard.tsx    // used in listing
+    ProductGrid.tsx
+    ProductDetail.tsx
+    CartDrawer.tsx     // optional slide-out cart
+    CartItem.tsx
+    QuantitySelector.tsx
+    PriceBadge.tsx
+    ColorSwatch.tsx
+  /context
+    CartContext.tsx    // addToCart, removeFromCart, updateQty, clearCart
+  /pages
+    Home.tsx
+    Products.tsx
+    ProductPage.tsx
+    CartPage.tsx
+    Checkout.tsx
+    About.tsx
+  /data
+    products.ts
+    meta.ts            // contact, instagram
+  /hooks
+    useLocalStorage.ts
+  /styles
+    globals.css OR tailwind.css
+  App.tsx
+  main.tsx
+  types.d.ts
+
+-------------------------
+8) FUNCTIONAL SPEC & CONTRACTS
+-------------------------
+CartContext API:
+  addToCart(productId: string, qty: number): void
+  removeFromCart(productId: string): void
+  updateQty(productId: string, qty: number): void
+  clearCart(): void
+  getCart(): { items: {productId, qty}[], total: number }
+
+LocalStorage keys:
+  'cart' -> JSON { items: [ { id, qty } ], lastUpdated: timestamp }
+  'orders' -> JSON array of placed orders
+
+Checkout flow:
+  - Validate required fields (name, phone)
+  - On Place Order:
+      orders = localStorage.getItem('orders') || []
+      create order object { id: uuid(), items: cart.items, total, customer: {...}, createdAt }
+      push to orders, save back to localStorage
+      clear cart
+      show Order Success page with order summary and printable order id
+
+ProductPage route:
+  /product/:id  (use react-router params to read id -> fetch from products.ts)
+
+Search & Filters (optional, MVP minimal):
+  - Simple client-side search by name and shortDescription
+  - Filter by price ranges or age (optional)
+
+-------------------------
+9) ACCEPTANCE CRITERIA (TESTABLE)
+-------------------------
+Functional:
+  - Adding same product increments qty; cart count updates
+  - Removing product updates count and total
+  - Cart persists after full page reload
+  - Checkout form validates and creates an order in localStorage
+  - Product detail page shows correct product by id
+
+Design:
+  - Colors match design tokens and background is warm beige
+  - Responsive product grid (3/2/1 columns)
+  - Header cart badge shows integer count
+
+Accessibility:
+  - All buttons reachable by keyboard, images have alt text, form fields have labels
+
+Testing:
+  - Add unit tests that assert CartContext.addToCart and persistence behavior
+
+-------------------------
+10) README (copy-paste)
+-------------------------
+# digi-aata-demo
+Static React + TypeScript demo e-commerce site with hardcoded products (no payments).
+
+## Setup
+1. npm install
+2. npm run dev
+3. Open http://localhost:5173
+
+## Build
+npm run build
+npm run preview
+
+## Tests
+npm test
+
+## Notes
+- Products are in src/data/products.ts
+- Cart stored in localStorage under 'cart'
+- Orders stored in localStorage under 'orders'
+
+-------------------------
+11) EXTRA IMPLEMENTATION NOTES (LLM-specific)
+-------------------------
+- When prompting an LLM to generate the repo, ask it to output file tree and then file contents in code blocks with file paths as headings, e.g.:
+  ``` 
+  /src/main.tsx
+  ``` 
+  then code block.
+
+- Ask the LLM to generate sample images placeholder files (or tiny base64 placeholder PNGs) if real images are unavailable.
+
+- Ensure any generated code uses TypeScript types and exports for Product, CartItem, Order.
+
+- Prefer small, well-commented components for maintainability. Keep styling in Tailwind utility classes, but centralize color tokens in tailwind.config.js (theme.extend.colors) OR in :root CSS variables.
+
+-------------------------
+12) SEO, Analytics & Contact Hooks (optional)
+-------------------------
+- Add meta tags for description, title, og:image (use brochure hero)
+- Add an invisible contact form submit to send customer details via email (external service) later; for now, log to console and save to localStorage.
+- Placeholder for Google Analytics or Plausible (add ID in environment variable)
+
+-------------------------
+13) SECURITY & PRIVACY
+-------------------------
+- No payments or customer data sent to third parties in MVP
+- If later integrating analytics or email, disclose in privacy policy
+- Store only minimal customer info and delete older orders on a schedule (manual step)
+
+-------------------------
+14) DELIVERY (what LLM should output)
+-------------------------
+- Complete ready-to-run repo file list (package.json, vite.config, tailwind.config, tsconfig.json)
+- /src/data/products.ts (complete)
+- Components, pages, context, hooks, styles
+- README with setup & run instructions
+- Unit tests for CartContext
+- A produced archive or instructions to create the project locally
+
+-------------------------
+15) CONTACT / BUSINESS INFO (from PDF)
+-------------------------
+PHONE: +91 8867576494
+INSTAGRAM: digi_aata
+ADDRESS: JP Nagar, Bangalore
+
+-------------------------
+END OF FILE
+-------------------------
