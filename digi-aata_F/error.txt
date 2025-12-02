@@ -1,0 +1,93 @@
+PS C:\Users\Shrihari\OneDrive\Desktop\New folder (2)\Digi_Dim\digi-aata_F> npm run dev
+
+> digi-aata@0.0.0 dev
+> vite
+
+You are using Node.js 22.11.0. Vite requires Node.js version 20.19+ or 22.12+. Please upgrade your Node.js version.
+
+  VITE v7.2.4  ready in 869 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+2:55:07 pm [vite] Internal server error: Failed to resolve import "../types" from "src/pages/Products.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Shrihari/OneDrive/Desktop/New folder (2)/Digi_Dim/digi-aata_F/src/pages/Products.tsx:3:24
+  3  |  import React, { useState, useEffect } from "react";
+  4  |  import ProductGrid from "../components/ProductGrid";
+  5  |  import { Product } from "../types";
+     |                           ^
+  6  |  const Products = () => {
+  7  |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29647:43) 
+      at TransformPluginContext.error (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29644:14)      
+      at normalizeUrl (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27767:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)       
+      at async file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27825:32
+      at async Promise.all (index 3)
+      at async TransformPluginContext.transform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27793:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29445:14)
+      at async loadAndTransform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:23316:26)
+2:55:07 pm [vite] Internal server error: Failed to resolve import "../types" from "src/pages/Home.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Shrihari/OneDrive/Desktop/New folder (2)/Digi_Dim/digi-aata_F/src/pages/Home.tsx:5:24
+  5  |  import ProductGrid from "../components/ProductGrid";
+  6  |  import { META } from "../data/meta";
+  7  |  import { Product } from "../types";
+     |                           ^
+  8  |  const Home = () => {
+  9  |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29647:43) 
+      at TransformPluginContext.error (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29644:14)      
+      at normalizeUrl (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27767:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)       
+      at async file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27825:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27793:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29445:14)
+      at async loadAndTransform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:23316:26)
+2:55:07 pm [vite] (client) Pre-transform error: Failed to resolve import "../types" from "src/pages/Products.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Shrihari/OneDrive/Desktop/New folder (2)/Digi_Dim/digi-aata_F/src/pages/Products.tsx:3:24
+  3  |  import React, { useState, useEffect } from "react";
+  4  |  import ProductGrid from "../components/ProductGrid";
+  5  |  import { Product } from "../types";
+     |                           ^
+  6  |  const Products = () => {
+  7  |    _s();
+2:55:07 pm [vite] (client) Pre-transform error: Failed to resolve import "../types" from "src/pages/Home.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Shrihari/OneDrive/Desktop/New folder (2)/Digi_Dim/digi-aata_F/src/pages/Home.tsx:5:24
+  5  |  import ProductGrid from "../components/ProductGrid";
+  6  |  import { META } from "../data/meta";
+  7  |  import { Product } from "../types";
+     |                           ^
+  8  |  const Home = () => {
+  9  |    _s();
+2:55:07 pm [vite] Internal server error: Failed to resolve import "../types" from "src/components/Header.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Shrihari/OneDrive/Desktop/New folder (2)/Digi_Dim/digi-aata_F/src/components/Header.tsx:4:21
+  5  |  import { Link, useNavigate } from "react-router-dom";
+  6  |  import { useCart } from "../context/CartContext";
+  7  |  import { User } from "../types";
+     |                        ^
+  8  |  const Header = () => {
+  9  |    _s();
+      at TransformPluginContext._formatLog (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29647:43) 
+      at TransformPluginContext.error (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29644:14)      
+      at normalizeUrl (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27767:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)       
+      at async file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27825:32
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:27793:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:29445:14)
+      at async loadAndTransform (file:///C:/Users/Shrihari/OneDrive/Desktop/New%20folder%20(2)/Digi_Dim/digi-aata_F/node_modules/vite/dist/node/chunks/config.js:23316:26)
+2:55:07 pm [vite] (client) Pre-transform error: Failed to resolve import "../types" from "src/components/Header.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/Shrihari/OneDrive/Desktop/New folder (2)/Digi_Dim/digi-aata_F/src/components/Header.tsx:4:21
+  5  |  import { Link, useNavigate } from "react-router-dom";
+  6  |  import { useCart } from "../context/CartContext";
+  7  |  import { User } from "../types";
+     |                        ^
+  8  |  const Header = () => {
+  9  |    _s();

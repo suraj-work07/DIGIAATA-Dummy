@@ -1,18 +1,43 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import ProductGrid from '../components/ProductGrid';
-import { PRODUCTS } from '../data/products';
 import { META } from '../data/meta';
+import type { Product } from '../types.d.ts';
 
 const Home: React.FC = () => {
-  // Take a few featured products for the home page, e.g., first 6
-  const featuredProducts = PRODUCTS.slice(0, 6);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/products');
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data: Product[] = await response.json();
+        setProducts(data.slice(0, 6)); // Take the first 6 products for the featured section
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="bg-background text-text-primary">
       {/* Hero Section */}
-      <section 
-        className="relative h-[70vh] bg-cover bg-center" 
-        style={{ backgroundImage: `url(${PRODUCTS[12].image})` }} // Using rainbow-arches as hero
+      <section
+        className="relative h-[70vh] bg-cover bg-center"
+        style={{ backgroundImage: `url(${products.length > 0 ? products[0].image_url : ''})` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="text-center text-white p-4">
@@ -39,7 +64,9 @@ const Home: React.FC = () => {
       <section className="bg-surface py-20">
         <div className="container mx-auto">
           <h2 className="text-4xl md:text-5xl font-heading text-center mb-12 font-bold">Featured Products</h2>
-          <ProductGrid products={featuredProducts} />
+          {loading && <p>Loading products...</p>}
+          {error && <p>Error: {error}</p>}
+          {!loading && !error && <ProductGrid products={products} />}
           <div className="text-center mt-16">
             <Link to="/products" className="inline-block bg-primary text-white px-10 py-4 rounded-lg hover:bg-opacity-90 transition-colors">View All Products</Link>
           </div>

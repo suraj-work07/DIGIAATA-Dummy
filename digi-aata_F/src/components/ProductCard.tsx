@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import type { Product } from '../data/products';
+import type { Product } from '../types.d.ts';
 import PriceBadge from './PriceBadge';
 import { useState } from 'react';
 
@@ -13,7 +13,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
-    addToCart(product.id, 1);
+    addToCart(String(product.id), 1);
     setAdded(true);
     setTimeout(() => {
       setAdded(false);
@@ -23,9 +23,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="bg-surface rounded-xl shadow-lg border border-gray-200 p-4 flex flex-col text-center transition-transform transform hover:scale-105">
       <Link to={`/product/${product.id}`} className="flex-grow">
-        <img src={product.image} alt={product.shortDescription} className="w-full h-48 object-cover rounded-lg mb-4" />
+        <img src={product.image_url} alt={product.description} className="w-full h-48 object-cover rounded-lg mb-4" />
         <h3 className="text-lg font-heading text-text-primary mb-2">{product.name}</h3>
-        <p className="text-muted text-sm mb-2 flex-grow">{product.shortDescription}</p>
+        <p className="text-muted text-sm mb-2 flex-grow">{product.description}</p>
       </Link>
       <div className="flex items-center justify-between w-full mt-4">
         <PriceBadge price={product.price} />

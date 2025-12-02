@@ -23,10 +23,10 @@ const CartPage: React.FC = () => {
       <div className="bg-surface rounded-xl shadow-soft-warm p-6">
         <div className="space-y-4">
           {cartItems.map(item => {
-            const product = getProductDetails(item.id);
+            const product = getProductDetails(String(item.product_id));
             return product ? (
               <CartItem
-                key={item.id}
+                key={item.product_id}
                 item={item}
                 product={product}
                 onRemove={removeFromCart}

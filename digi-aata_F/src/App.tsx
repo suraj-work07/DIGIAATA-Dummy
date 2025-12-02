@@ -13,6 +13,7 @@ import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import About from './pages/About';
 import OrderSuccess from './pages/OrderSuccess';
+import LoginPage from './pages/LoginPage';
 
 import './App.css'; // Keep this if there are global styles, otherwise remove or rename
 
@@ -31,6 +32,7 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/about" element={<About />} />
               <Route path="/order-success" element={<OrderSuccess />} />
+              <Route path="/login" element={<LoginPage />} />
               {/* Fallback for unknown routes */}
               <Route path="*" element={<h1 className="text-center text-text-primary text-4xl mt-10">404 - Page Not Found</h1>} />
             </Routes>
